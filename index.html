@@ -1,0 +1,1193 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WarungKu — Sistem Kasir Toko Kelontong</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- ══════════════════════════════════════════
+     TOAST CONTAINER
+══════════════════════════════════════════ -->
+    <div id="toast-container"></div>
+
+    <!-- ══════════════════════════════════════════
+     OVERLAY (mobile sidebar)
+══════════════════════════════════════════ -->
+    <div id="overlay" class="overlay hidden" onclick="closeSidebar()"></div>
+
+    <!-- ══════════════════════════════════════════
+     1. LANDING PAGE
+══════════════════════════════════════════ -->
+    <div id="page-landing">
+      <nav class="land-nav">
+        <div class="land-logo">
+          <div class="logo-icon"><i class="fa-solid fa-store"></i></div>
+          <div><span>WARTAN</span><small>POS</small></div>
+        </div>
+        <button class="land-btn-ghost" onclick="showPage('login')">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Masuk
+        </button>
+      </nav>
+
+      <div class="land-hero">
+        <div class="land-badge">
+          <i class="fa-solid fa-bolt"></i> Sistem Kasir Modern & Mudah Digunakan
+        </div>
+        <h1 class="land-title">
+          Kelola Toko Kelontong <span>Lebih Cerdas</span>
+        </h1>
+        <p class="land-sub">
+          Sistem informasi toko kelontong lengkap dengan kasir (POS), manajemen
+          produk, laporan penjualan, dan CRM pelanggan — semua dalam satu
+          platform.
+        </p>
+        <div class="land-cta">
+          <button class="land-btn-primary" onclick="showPage('login')">
+            <i class="fa-solid fa-play"></i> Mulai Sekarang
+          </button>
+          <button
+            class="land-btn-ghost"
+            onclick="
+              document
+                .querySelector('.land-features')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+          >
+            Lihat Fitur <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="land-features">
+        <div class="land-feat">
+          <div class="land-feat-icon">
+            <i class="fa-solid fa-cash-register"></i>
+          </div>
+          <h3>Kasir (POS)</h3>
+          <p>
+            Transaksi cepat dengan pencarian produk, keranjang belanja, dan
+            cetak struk otomatis.
+          </p>
+        </div>
+        <div class="land-feat">
+          <div class="land-feat-icon">
+            <i class="fa-solid fa-boxes-stacked"></i>
+          </div>
+          <h3>Manajemen Produk</h3>
+          <p>
+            CRUD produk lengkap dengan kategori, stok, harga beli, dan harga
+            jual.
+          </p>
+        </div>
+        <div class="land-feat">
+          <div class="land-feat-icon">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h3>Laporan Penjualan</h3>
+          <p>
+            Laporan harian, mingguan, bulanan dengan grafik dan ringkasan
+            keuntungan.
+          </p>
+        </div>
+        <div class="land-feat">
+          <div class="land-feat-icon"><i class="fa-solid fa-users"></i></div>
+          <h3>CRM Pelanggan</h3>
+          <p>
+            Database pelanggan terintegrasi dengan histori transaksi dan poin
+            loyalitas.
+          </p>
+        </div>
+        <div class="land-feat">
+          <div class="land-feat-icon">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3>Multi Role</h3>
+          <p>
+            Role Admin dan Kasir dengan hak akses berbeda untuk keamanan data
+            toko.
+          </p>
+        </div>
+        <div class="land-feat">
+          <div class="land-feat-icon">
+            <i class="fa-solid fa-mobile-screen"></i>
+          </div>
+          <h3>Responsive</h3>
+          <p>Tampilan optimal di komputer, tablet, maupun smartphone.</p>
+        </div>
+      </div>
+
+      <footer class="land-footer">
+        <p>
+          &copy; 2025 WarungKu POS — Dibuat untuk toko kelontong Indonesia 🇮🇩
+        </p>
+      </footer>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     2. LOGIN PAGE
+══════════════════════════════════════════ -->
+    <div id="page-login" class="hidden">
+      <div class="login-card">
+        <div class="login-logo">
+          <div class="logo-circle"><i class="fa-solid fa-store"></i></div>
+          <h1>WARTAN POS</h1>
+          <p>Masuk ke sistem kasir toko Anda</p>
+        </div>
+        <div class="login-form">
+          <div class="input-group">
+            <label>Username</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-user icon"></i>
+              <input
+                id="login-username"
+                type="text"
+                class="input"
+                placeholder="Masukkan username"
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Password</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-lock icon"></i>
+              <input
+                id="login-password"
+                type="password"
+                class="input"
+                placeholder="Masukkan password"
+              />
+            </div>
+          </div>
+          <button class="btn btn-primary btn-lg w-full" onclick="handleLogin()">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Masuk
+          </button>
+          <div class="login-demo-accounts">
+            <p>Akun Demo — Klik untuk isi otomatis</p>
+            <div class="demo-acc" onclick="fillDemo('admin', 'admin123')">
+              <span
+                ><i class="fa-solid fa-crown" style="color: var(--accent)"></i>
+                Admin</span
+              >
+              <strong>admin / admin123</strong>
+            </div>
+            <div class="demo-acc" onclick="fillDemo('kasir1', 'kasir123')">
+              <span
+                ><i
+                  class="fa-solid fa-cash-register"
+                  style="color: var(--primary)"
+                ></i>
+                Kasir</span
+              >
+              <strong>kasir1 / kasir123</strong>
+            </div>
+          </div>
+          <button class="btn btn-ghost w-full" onclick="showPage('landing')">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+     3. APP SHELL (after login)
+══════════════════════════════════════════ -->
+    <div id="page-app" class="hidden">
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+          <div class="logo-icon"><i class="fa-solid fa-store"></i></div>
+          <div>
+            <span>WARTAN</span>
+            <small>POS</small>
+          </div>
+        </div>
+
+        <div class="sidebar-section">Menu Utama</div>
+        <a
+          class="nav-item"
+          id="nav-dashboard"
+          onclick="navigateTo('dashboard')"
+        >
+          <i class="fa-solid fa-gauge"></i> Dashboard
+        </a>
+        <a class="nav-item" id="nav-pos" onclick="navigateTo('pos')">
+          <i class="fa-solid fa-cash-register"></i> Kasir (POS)
+        </a>
+
+        <div class="sidebar-section admin-only">Manajemen</div>
+        <a
+          class="nav-item admin-only"
+          id="nav-products"
+          onclick="navigateTo('products')"
+        >
+          <i class="fa-solid fa-boxes-stacked"></i> Produk
+        </a>
+        <a
+          class="nav-item admin-only"
+          id="nav-categories"
+          onclick="navigateTo('categories')"
+        >
+          <i class="fa-solid fa-tags"></i> Kategori
+        </a>
+        <a
+          class="nav-item admin-only"
+          id="nav-transactions"
+          onclick="navigateTo('transactions')"
+        >
+          <i class="fa-solid fa-receipt"></i> Transaksi
+        </a>
+        <a
+          class="nav-item admin-only"
+          id="nav-customers"
+          onclick="navigateTo('customers')"
+        >
+          <i class="fa-solid fa-users"></i> Pelanggan (CRM)
+        </a>
+        <a
+          class="nav-item admin-only"
+          id="nav-reports"
+          onclick="navigateTo('reports')"
+        >
+          <i class="fa-solid fa-chart-bar"></i> Laporan
+        </a>
+        <a
+          class="nav-item admin-only"
+          id="nav-users"
+          onclick="navigateTo('users')"
+        >
+          <i class="fa-solid fa-user-gear"></i> Pengguna
+        </a>
+
+        <div class="sidebar-footer">
+          <div class="user-info">
+            <div class="user-avatar" id="sidebar-avatar">A</div>
+            <div class="user-info-text">
+              <div class="name" id="sidebar-name">Admin</div>
+              <div class="role" id="sidebar-role">Administrator</div>
+            </div>
+          </div>
+          <button
+            class="btn btn-ghost w-full"
+            style="
+              color: rgba(255, 255, 255, 0.5);
+              justify-content: flex-start;
+              gap: 8px;
+              margin-top: 4px;
+            "
+            onclick="handleLogout()"
+          >
+            <i class="fa-solid fa-right-from-bracket"></i> Keluar
+          </button>
+        </div>
+      </aside>
+
+      <!-- NAVBAR -->
+      <header class="navbar">
+        <div class="navbar-left">
+          <button
+            class="btn btn-ghost btn-icon"
+            id="sidebar-toggle"
+            onclick="toggleSidebar()"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <h1 class="page-title" id="navbar-title">Dashboard</h1>
+        </div>
+        <div class="navbar-right">
+          <span class="badge badge-green" id="navbar-role-badge">Admin</span>
+          <button
+            class="btn btn-ghost btn-icon"
+            title="Keluar"
+            onclick="handleLogout()"
+          >
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
+        <!-- ── DASHBOARD ───────────────────────── -->
+        <div id="view-dashboard" class="page-content hidden">
+          <div class="stats-grid" id="stats-grid">
+            <!-- filled by JS -->
+          </div>
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title"
+                  ><i class="fa-solid fa-clock-rotate-left"></i> Transaksi
+                  Terbaru</span
+                >
+                <button
+                  class="btn btn-sm btn-secondary"
+                  onclick="navigateTo('transactions')"
+                >
+                  Lihat Semua
+                </button>
+              </div>
+              <div class="card-body p0">
+                <div class="table-wrapper">
+                  <table id="dash-recent-table">
+                    <thead>
+                      <tr>
+                        <th>No. Transaksi</th>
+                        <th>Kasir</th>
+                        <th>Pelanggan</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Waktu</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dash-recent-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title"
+                  ><i
+                    class="fa-solid fa-triangle-exclamation"
+                    style="color: var(--accent)"
+                  ></i>
+                  Stok Hampir Habis</span
+                >
+              </div>
+              <div class="card-body p0">
+                <div class="table-wrapper">
+                  <table id="dash-stock-table">
+                    <thead>
+                      <tr>
+                        <th>Produk</th>
+                        <th>Kategori</th>
+                        <th>Stok</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dash-stock-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── POS / KASIR ─────────────────────── -->
+        <div id="view-pos" class="page-content hidden">
+          <div class="pos-layout">
+            <!-- LEFT: Product picker -->
+            <div class="pos-products">
+              <div class="pos-search-bar">
+                <div class="input-with-icon" style="flex: 1">
+                  <i class="fa-solid fa-magnifying-glass icon"></i>
+                  <input
+                    id="pos-search"
+                    type="text"
+                    class="input"
+                    placeholder="Cari produk atau scan barcode..."
+                    oninput="renderPosProducts()"
+                  />
+                </div>
+                <select
+                  class="select"
+                  style="width: 160px"
+                  id="pos-cat-filter"
+                  onchange="renderPosProducts()"
+                >
+                  <option value="">Semua Kategori</option>
+                </select>
+              </div>
+              <div class="pos-product-grid" id="pos-product-grid"></div>
+            </div>
+            <!-- RIGHT: Cart -->
+            <div class="pos-cart">
+              <div class="pos-cart-header">
+                <div>
+                  <h3>Keranjang Belanja</h3>
+                  <div class="input-with-icon" style="margin-top: 10px">
+                    <i class="fa-solid fa-user icon"></i>
+                    <select
+                      class="select"
+                      id="pos-customer"
+                      style="font-size: 13px"
+                    >
+                      <option value="">Umum (Tanpa Member)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="pos-cart-items" id="pos-cart-items">
+                <div class="cart-empty">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  <p>Keranjang masih kosong</p>
+                </div>
+              </div>
+              <div class="pos-cart-footer">
+                <div class="cart-totals">
+                  <div class="cart-row">
+                    <span>Subtotal</span><span id="cart-subtotal">Rp 0</span>
+                  </div>
+                  <div class="cart-row discount">
+                    <span>Diskon</span>
+                    <div style="display: flex; align-items: center; gap: 6px">
+                      <input
+                        id="cart-disc-val"
+                        type="number"
+                        class="input"
+                        style="width: 80px; padding: 4px 8px; font-size: 13px"
+                        placeholder="0"
+                        oninput="updateCartTotals()"
+                        min="0"
+                      />
+                      <select
+                        id="cart-disc-type"
+                        class="select"
+                        style="width: 60px; padding: 4px 8px; font-size: 13px"
+                        onchange="updateCartTotals()"
+                      >
+                        <option value="flat">Rp</option>
+                        <option value="pct">%</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="cart-row total">
+                    <span>Total</span
+                    ><span id="cart-total" class="font-mono">Rp 0</span>
+                  </div>
+                </div>
+                <div class="cart-payment">
+                  <div class="input-group">
+                    <label>Bayar (Rp)</label>
+                    <input
+                      id="cart-pay"
+                      type="number"
+                      class="input"
+                      placeholder="0"
+                      oninput="calcChange()"
+                    />
+                  </div>
+                  <div
+                    class="cart-row"
+                    style="
+                      font-size: 15px;
+                      font-weight: 700;
+                      color: var(--primary);
+                    "
+                  >
+                    <span>Kembalian</span
+                    ><span id="cart-change" class="font-mono">Rp 0</span>
+                  </div>
+                  <div style="display: flex; gap: 8px; margin-top: 6px">
+                    <button
+                      class="btn btn-secondary"
+                      style="flex: 1"
+                      onclick="clearCart()"
+                    >
+                      <i class="fa-solid fa-trash"></i> Batal
+                    </button>
+                    <button
+                      class="btn btn-primary"
+                      style="flex: 2"
+                      onclick="processTransaction()"
+                    >
+                      <i class="fa-solid fa-check"></i> Bayar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── PRODUK ───────────────────────────── -->
+        <div id="view-products" class="page-content hidden">
+          <div class="page-toolbar">
+            <div class="input-with-icon" style="width: 280px">
+              <i class="fa-solid fa-magnifying-glass icon"></i>
+              <input
+                id="prod-search"
+                type="text"
+                class="input"
+                placeholder="Cari produk..."
+                oninput="renderProducts()"
+              />
+            </div>
+            <div style="display: flex; gap: 8px">
+              <select
+                class="select"
+                style="width: 160px"
+                id="prod-cat-filter"
+                onchange="renderProducts()"
+              >
+                <option value="">Semua Kategori</option>
+              </select>
+              <button class="btn btn-primary" onclick="openProductModal()">
+                <i class="fa-solid fa-plus"></i> Tambah Produk
+              </button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body p0">
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Produk</th>
+                      <th>Kategori</th>
+                      <th>Barcode</th>
+                      <th>Harga Jual</th>
+                      <th>Harga Beli</th>
+                      <th>Stok</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="products-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── KATEGORI ─────────────────────────── -->
+        <div id="view-categories" class="page-content hidden">
+          <div class="page-toolbar">
+            <span style="color: var(--text2); font-size: 14px"
+              >Kelola kategori produk toko Anda</span
+            >
+            <button class="btn btn-primary" onclick="openCategoryModal()">
+              <i class="fa-solid fa-plus"></i> Tambah Kategori
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-body p0">
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nama Kategori</th>
+                      <th>Deskripsi</th>
+                      <th>Jumlah Produk</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="categories-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TRANSAKSI ─────────────────────────── -->
+        <div id="view-transactions" class="page-content hidden">
+          <div class="page-toolbar">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap">
+              <input
+                id="tx-search"
+                type="text"
+                class="input"
+                style="width: 220px"
+                placeholder="Cari no. transaksi..."
+                oninput="renderTransactions()"
+              />
+              <input
+                id="tx-date-from"
+                type="date"
+                class="input"
+                style="width: 160px"
+                onchange="renderTransactions()"
+              />
+              <input
+                id="tx-date-to"
+                type="date"
+                class="input"
+                style="width: 160px"
+                onchange="renderTransactions()"
+              />
+            </div>
+            <button class="btn btn-secondary" onclick="exportTransactions()">
+              <i class="fa-solid fa-download"></i> Export CSV
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-body p0">
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>No. Transaksi</th>
+                      <th>Tanggal</th>
+                      <th>Kasir</th>
+                      <th>Pelanggan</th>
+                      <th>Items</th>
+                      <th>Total</th>
+                      <th>Bayar</th>
+                      <th>Kembalian</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transactions-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── PELANGGAN (CRM) ──────────────────── -->
+        <div id="view-customers" class="page-content hidden">
+          <div class="page-toolbar">
+            <div class="input-with-icon" style="width: 280px">
+              <i class="fa-solid fa-magnifying-glass icon"></i>
+              <input
+                id="cust-search"
+                type="text"
+                class="input"
+                placeholder="Cari pelanggan..."
+                oninput="renderCustomers()"
+              />
+            </div>
+            <button class="btn btn-primary" onclick="openCustomerModal()">
+              <i class="fa-solid fa-user-plus"></i> Tambah Pelanggan
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-body p0">
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nama</th>
+                      <th>Telepon</th>
+                      <th>Alamat</th>
+                      <th>Total Transaksi</th>
+                      <th>Total Belanja</th>
+                      <th>Bergabung</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="customers-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── LAPORAN ───────────────────────────── -->
+        <div id="view-reports" class="page-content hidden">
+          <div class="page-toolbar">
+            <div
+              style="
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+                align-items: center;
+              "
+            >
+              <select
+                class="select"
+                style="width: 160px"
+                id="report-period"
+                onchange="renderReports()"
+              >
+                <option value="today">Hari Ini</option>
+                <option value="week">7 Hari Terakhir</option>
+                <option value="month" selected>Bulan Ini</option>
+                <option value="all">Semua Waktu</option>
+              </select>
+            </div>
+            <button class="btn btn-secondary" onclick="exportReportCSV()">
+              <i class="fa-solid fa-download"></i> Export
+            </button>
+          </div>
+
+          <div class="stats-grid" id="report-stats"></div>
+
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title"
+                  ><i class="fa-solid fa-chart-bar"></i> Penjualan per
+                  Hari</span
+                >
+              </div>
+              <div class="card-body">
+                <div class="chart-container" id="chart-daily"></div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title"
+                  ><i class="fa-solid fa-trophy"></i> Produk Terlaris</span
+                >
+              </div>
+              <div class="card-body p0">
+                <div class="table-wrapper">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Produk</th>
+                        <th>Terjual</th>
+                        <th>Pendapatan</th>
+                      </tr>
+                    </thead>
+                    <tbody id="report-top-products"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── PENGGUNA ──────────────────────────── -->
+        <div id="view-users" class="page-content hidden">
+          <div class="page-toolbar">
+            <span style="color: var(--text2); font-size: 14px"
+              >Kelola akun pengguna sistem</span
+            >
+            <button class="btn btn-primary" onclick="openUserModal()">
+              <i class="fa-solid fa-user-plus"></i> Tambah Pengguna
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-body p0">
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nama</th>
+                      <th>Username</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Bergabung</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="users-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- end app-shell -->
+
+    <!-- ══════════════════════════════════════════
+     MODALS
+══════════════════════════════════════════ -->
+
+    <!-- Modal: Produk -->
+    <div id="modal-product" class="modal-overlay hidden">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title" id="modal-product-title">Tambah Produk</h2>
+          <button
+            class="btn btn-ghost btn-icon"
+            onclick="closeModal('modal-product')"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="product-id" />
+          <div class="form-grid">
+            <div class="input-group" style="grid-column: span 2">
+              <label>Nama Produk *</label>
+              <input
+                id="product-name"
+                type="text"
+                class="input"
+                placeholder="Nama produk"
+              />
+            </div>
+            <div class="input-group">
+              <label>Kategori *</label>
+              <select id="product-category" class="select"></select>
+            </div>
+            <div class="input-group">
+              <label>Barcode</label>
+              <input
+                id="product-barcode"
+                type="text"
+                class="input"
+                placeholder="Opsional"
+              />
+            </div>
+            <div class="input-group">
+              <label>Harga Beli (Rp) *</label>
+              <input
+                id="product-cost"
+                type="number"
+                class="input"
+                placeholder="0"
+                min="0"
+              />
+            </div>
+            <div class="input-group">
+              <label>Harga Jual (Rp) *</label>
+              <input
+                id="product-price"
+                type="number"
+                class="input"
+                placeholder="0"
+                min="0"
+              />
+            </div>
+            <div class="input-group">
+              <label>Stok Awal *</label>
+              <input
+                id="product-stock"
+                type="number"
+                class="input"
+                placeholder="0"
+                min="0"
+              />
+            </div>
+            <div class="input-group">
+              <label>Stok Minimum</label>
+              <input
+                id="product-min-stock"
+                type="number"
+                class="input"
+                placeholder="5"
+                min="0"
+              />
+            </div>
+            <div class="input-group" style="grid-column: span 2">
+              <label>Satuan</label>
+              <input
+                id="product-unit"
+                type="text"
+                class="input"
+                placeholder="pcs, kg, liter, dus..."
+              />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary"
+            onclick="closeModal('modal-product')"
+          >
+            Batal
+          </button>
+          <button class="btn btn-primary" onclick="saveProduct()">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Kategori -->
+    <div id="modal-category" class="modal-overlay hidden">
+      <div class="modal" style="max-width: 400px">
+        <div class="modal-header">
+          <h2 class="modal-title" id="modal-cat-title">Tambah Kategori</h2>
+          <button
+            class="btn btn-ghost btn-icon"
+            onclick="closeModal('modal-category')"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="category-id" />
+          <div class="input-group" style="margin-bottom: 16px">
+            <label>Nama Kategori *</label>
+            <input
+              id="category-name"
+              type="text"
+              class="input"
+              placeholder="Nama kategori"
+            />
+          </div>
+          <div class="input-group">
+            <label>Deskripsi</label>
+            <input
+              id="category-desc"
+              type="text"
+              class="input"
+              placeholder="Deskripsi singkat (opsional)"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary"
+            onclick="closeModal('modal-category')"
+          >
+            Batal
+          </button>
+          <button class="btn btn-primary" onclick="saveCategory()">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Customer -->
+    <div id="modal-customer" class="modal-overlay hidden">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title" id="modal-cust-title">Tambah Pelanggan</h2>
+          <button
+            class="btn btn-ghost btn-icon"
+            onclick="closeModal('modal-customer')"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="customer-id" />
+          <div class="form-grid">
+            <div class="input-group" style="grid-column: span 2">
+              <label>Nama Lengkap *</label>
+              <input
+                id="customer-name"
+                type="text"
+                class="input"
+                placeholder="Nama pelanggan"
+              />
+            </div>
+            <div class="input-group">
+              <label>No. Telepon *</label>
+              <input
+                id="customer-phone"
+                type="text"
+                class="input"
+                placeholder="08xxxxxxxxxx"
+              />
+            </div>
+            <div class="input-group">
+              <label>Email</label>
+              <input
+                id="customer-email"
+                type="email"
+                class="input"
+                placeholder="email@opsional.com"
+              />
+            </div>
+            <div class="input-group" style="grid-column: span 2">
+              <label>Alamat</label>
+              <input
+                id="customer-address"
+                type="text"
+                class="input"
+                placeholder="Alamat lengkap (opsional)"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary"
+            onclick="closeModal('modal-customer')"
+          >
+            Batal
+          </button>
+          <button class="btn btn-primary" onclick="saveCustomer()">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: User -->
+    <div id="modal-user" class="modal-overlay hidden">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title" id="modal-user-title">Tambah Pengguna</h2>
+          <button
+            class="btn btn-ghost btn-icon"
+            onclick="closeModal('modal-user')"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="user-id" />
+          <div class="form-grid">
+            <div class="input-group" style="grid-column: span 2">
+              <label>Nama Lengkap *</label>
+              <input
+                id="user-name"
+                type="text"
+                class="input"
+                placeholder="Nama pengguna"
+              />
+            </div>
+            <div class="input-group">
+              <label>Username *</label>
+              <input
+                id="user-username"
+                type="text"
+                class="input"
+                placeholder="username unik"
+              />
+            </div>
+            <div class="input-group">
+              <label>Role *</label>
+              <select id="user-role" class="select">
+                <option value="kasir">Kasir</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label>Password *</label>
+              <input
+                id="user-password"
+                type="password"
+                class="input"
+                placeholder="Password"
+              />
+            </div>
+            <div class="input-group">
+              <label>Status</label>
+              <select id="user-status" class="select">
+                <option value="active">Aktif</option>
+                <option value="inactive">Non-aktif</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeModal('modal-user')">
+            Batal
+          </button>
+          <button class="btn btn-primary" onclick="saveUser()">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Struk / Receipt -->
+    <div id="modal-receipt" class="modal-overlay hidden">
+      <div class="modal" style="max-width: 380px">
+        <div class="modal-header">
+          <h2 class="modal-title">Struk Pembayaran</h2>
+          <button
+            class="btn btn-ghost btn-icon"
+            onclick="closeModal('modal-receipt')"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="receipt-content" class="receipt"></div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary"
+            onclick="closeModal('modal-receipt')"
+          >
+            Tutup
+          </button>
+          <button class="btn btn-primary" onclick="printReceipt()">
+            <i class="fa-solid fa-print"></i> Cetak
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Detail Transaksi -->
+    <div id="modal-tx-detail" class="modal-overlay hidden">
+      <div class="modal modal-lg">
+        <div class="modal-header">
+          <h2 class="modal-title">Detail Transaksi</h2>
+          <button
+            class="btn btn-ghost btn-icon"
+            onclick="closeModal('modal-tx-detail')"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body" id="tx-detail-body"></div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary"
+            onclick="closeModal('modal-tx-detail')"
+          >
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Detail Pelanggan -->
+    <div id="modal-cust-detail" class="modal-overlay hidden">
+      <div class="modal modal-lg">
+        <div class="modal-header">
+          <h2 class="modal-title" id="cust-detail-title">Riwayat Pelanggan</h2>
+          <button
+            class="btn btn-ghost btn-icon"
+            onclick="closeModal('modal-cust-detail')"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body" id="cust-detail-body"></div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary"
+            onclick="closeModal('modal-cust-detail')"
+          >
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Konfirmasi Hapus -->
+    <div id="modal-confirm" class="modal-overlay hidden">
+      <div class="modal" style="max-width: 380px">
+        <div class="modal-header">
+          <h2 class="modal-title" style="color: var(--danger)">
+            <i class="fa-solid fa-triangle-exclamation"></i> Konfirmasi Hapus
+          </h2>
+          <button
+            class="btn btn-ghost btn-icon"
+            onclick="closeModal('modal-confirm')"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="confirm-message" style="color: var(--text2); line-height: 1.6">
+            Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat
+            dibatalkan.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary"
+            onclick="closeModal('modal-confirm')"
+          >
+            Batal
+          </button>
+          <button
+            class="btn btn-danger"
+            id="confirm-btn"
+            onclick="executeDelete()"
+          >
+            <i class="fa-solid fa-trash"></i> Hapus
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app_new.js"></script>
+  </body>
+</html>
